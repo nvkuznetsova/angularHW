@@ -1,0 +1,13 @@
+<div class="jumbotron" *ngIf="cartItems.length; else emptyCart">
+  <h4 class="display-6 text-secondary text-center font-weight-light">Shopping Cart</h4>
+  <ul class="cart-list list-group" *ngFor="let item of cartItems">
+    <li>{{item.name}}</li>
+  </ul>
+  <div class="display-5 text-info pt-3" id="total" data-total="0">Total: $0.00</div>
+</div>
+
+<ng-template #emptyCart>
+  <div class="jumbotron">
+    <p class="text-secondary text-center">Your cart is empty</p>
+  </div>
+</ng-template>
