@@ -11,7 +11,7 @@ export class CartService {
   private products = new Subject<Product>();
   boughtProducts = this.products.asObservable();
 
-  addProduct(product: Product) {
+  addProduct(product: Product): void {
     this.products.next(product);
   }
 }

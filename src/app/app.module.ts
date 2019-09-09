@@ -7,20 +7,21 @@ import { CartService } from './services/cart-service/cart.service';
 import { ProductService } from './services/product-service/product.service';
 
 import { AppComponent } from './app.component';
-import { CartComponent } from './components/cart/cart.component';
-import { ProductComponentComponent } from './components/product-component/product-component.component';
-import { ProductListComponent } from './components/product-list/product-list.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+
+import { ProductsModule } from './modules/products/products.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CartComponent,
-    ProductComponentComponent,
-    ProductListComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
     NgbModule,
+    ProductsModule,
   ],
   providers: [
     CartService,

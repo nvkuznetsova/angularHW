@@ -1,7 +1,7 @@
 export enum Category {
   vegetables = 'Vegetables',
   fruits = 'Fruits',
-  chocolate = 'Chocolate',
+  sweets = 'Sweets',
   coffee = 'Coffee',
   noCategory = '',
 }

@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  position: relative;
+}
+
+.product-card {
+  min-width: 24%;
+}
+
+.main-footer {
+  position: absolute;
+  bottom: 0;
+}

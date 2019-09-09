@@ -1,13 +1,11 @@
 <div class="container-fluid">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
-    <h1 class="navbar-brand">Welcome to {{ title }}!</h1>
-  </nav>
-  <div class="row">
-    <div class="col-md-9">
-      <app-product-list></app-product-list>
-    </div>
-    <div class="col-md-3">
-      <app-cart></app-cart>
-    </div>
-  </div>
+  <header>
+    <app-header [title]="title"></app-header>
+  </header>
+  <main class="pb-5">
+    <app-products-page></app-products-page>
+  </main>
+  <footer class="main-footer navbar bg-info px-3">
+    <app-footer></app-footer>
+  </footer>
 </div>

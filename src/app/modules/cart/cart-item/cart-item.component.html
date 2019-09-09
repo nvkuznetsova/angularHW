@@ -1,0 +1,9 @@
+<div class="d-flex justify-content-between align-items-center">
+  {{cartItem.product.name | uppercase}}
+  <div>
+    <span class="count badge badge-info badge-pill"
+          (click)="onAddItem()">{{cartItem.count}}</span>
+    <span class="delete badge badge-danger ml-3"
+          (click)="onDeleteItem()">X</span>
+  </div>
+</div>

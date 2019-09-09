@@ -1,0 +1,21 @@
+<div class="jumbotron" *ngIf="cartItems.length; else emptyCart">
+  <h4 class="display-6 text-secondary text-center font-weight-light">Shopping Cart</h4>
+  <ul class="cart-list list-group" *ngFor="let item of cartItems">
+    <li class="list-group-item">
+      <app-cart-item [cartItem]="item"
+                     (addItem)="addCartItem($event)"
+                     (deleteItem)="deleteCartItem($event)"></app-cart-item>
+    </li>
+  </ul>
+  <div class="d-flex justify-content-between align-items-center">
+    <p class="display-5 text-info pt-3" id="total">Total: ${{total}}</p>
+    <button class="btn btn-info text-light w-50"
+       [disabled]="!total">Order</button>
+  </div>
+</div>
+
+<ng-template #emptyCart>
+  <div class="jumbotron">
+    <p class="text-secondary text-center">Your cart is empty</p>
+  </div>
+</ng-template>
