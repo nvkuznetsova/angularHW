@@ -6,6 +6,7 @@ export enum Category {
   noCategory = '',
 }
 export interface Product {
+  id: number;
   name: string;
   description?: string;
   price: number;

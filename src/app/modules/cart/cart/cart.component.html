@@ -4,13 +4,17 @@
     <li class="list-group-item">
       <app-cart-item [cartItem]="item"
                      (addItem)="addCartItem($event)"
-                     (deleteItem)="deleteCartItem($event)"></app-cart-item>
+                     (deleteItem)="deleteCartItem($event)"
+                     (deleteProduct)="deleteProduct($event)"></app-cart-item>
     </li>
   </ul>
   <div class="d-flex justify-content-between align-items-center">
-    <p class="display-5 text-info pt-3" id="total">Total: ${{total}}</p>
-    <button class="btn btn-info text-light w-50"
-       [disabled]="!total">Order</button>
+    <p class="display-5 text-info pt-3" id="total">Total Sum: ${{totalSum}}</p>
+    <p class="display-5 text-info pt-3" id="total">Total Count: {{totalCount}}</p>
+  </div>
+  <div class="d-flex justify-content-end align-items-center">
+    <button class="btn btn-secondary text-light px-4 mr-3" (click)="clearCart()">Clear</button>
+    <button class="btn btn-info text-light px-4">Order</button>
   </div>
 </div>
 

@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { CartItem } from 'src/app/domain/CartItem';
-import { CartService } from 'src/app/services/cart-service/cart.service';
+import { CartService } from 'src/app/modules/core/services/cart-service/cart.service';
 import { Product } from 'src/app/domain/Product';
 
 @Component({
@@ -11,8 +11,9 @@ import { Product } from 'src/app/domain/Product';
   templateUrl: './cart.component.html',
 })
 export class CartComponent implements OnInit, OnDestroy {
-  cartItems: Array<CartItem> = [];
-  total = 0;
+  totalSum = 0;
+  totalCount = 0;
+  cartItems = [];
   private items: Subscription;
 
   constructor(private cartService: CartService) { }
@@ -24,14 +25,14 @@ export class CartComponent implements OnInit, OnDestroy {
         count: 1,
       };
       if (!this.isItemExists(cartItem)) {
-        this.cartItems.push(cartItem);
+        this.cartService.setCartProducts(cartItem);
       } else {
-        const idx = this.cartItems.findIndex((item: CartItem) => {
-          return item.product.name === product.name;
-        });
-        this.cartItems[idx].count += 1;
+        this.cartService.addCartItem(product.id);
       }
-      this.total += product.price;
+      this.cartItems = this.cartService.getCartProducts();
+      const { totalSum, totalCount } = this.cartService.updateCart();
+      this.totalSum = totalSum;
+      this.totalCount = totalCount;
     });
   }
 
@@ -39,20 +40,43 @@ export class CartComponent implements OnInit, OnDestroy {
     this.items.unsubscribe();
   }
 
-  addCartItem(price: number): void {
-    this.total += price;
+  addCartItem(cartItemId: number): void {
+    this.cartService.addCartItem(cartItemId);
+    const { totalSum, totalCount } = this.cartService.updateCart();
+    this.totalSum = totalSum;
+    this.totalCount = totalCount;
   }
 
   deleteCartItem(cartItem: CartItem): void {
-    this.total -= (cartItem.count * cartItem.product.price);
-    this.cartItems = this.cartItems.filter(item => {
-      return item.product.name !== cartItem.product.name;
-    });
+    if (cartItem.count === 1) {
+      this.deleteProduct(cartItem.product.id);
+      return;
+    }
+    this.cartService.deleteCartItem(cartItem.product.id);
+    const { totalSum, totalCount } = this.cartService.updateCart();
+    this.totalSum = totalSum;
+    this.totalCount = totalCount;
   }
 
-  isItemExists(item: CartItem): boolean {
-    return this.cartItems.some((cartItem: CartItem) => {
-      return item.product.name === cartItem.product.name;
+  deleteProduct(cartItemId: number): void {
+    this.cartService.deleteProduct(cartItemId);
+    this.cartItems = this.cartService.getCartProducts();
+    const { totalSum, totalCount } = this.cartService.updateCart();
+    this.totalSum = totalSum;
+    this.totalCount = totalCount;
+  }
+
+  clearCart(): void {
+    this.cartService.clearCart();
+    this.cartItems = this.cartService.getCartProducts();
+    const { totalSum, totalCount } = this.cartService.updateCart();
+    this.totalSum = totalSum;
+    this.totalCount = totalCount;
+  }
+
+  private isItemExists(item: CartItem): boolean {
+    return this.cartService.getCartProducts().some((cartItem: CartItem) => {
+      return item.product.id === cartItem.product.id;
     });
   }
 }
