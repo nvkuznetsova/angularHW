@@ -11,7 +11,7 @@ import { Product } from 'src/app/domain/Product';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  public products: Array<Product>;
+  public products: Promise<Array<Product>>;
 
   constructor(private productService: ProductService,
               private cartService: CartService) {}

@@ -3,8 +3,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { CartItem } from 'src/app/domain/CartItem';
-import { CartService } from 'src/app/modules/core/services/cart-service/cart.service';
 import { Product } from 'src/app/domain/Product';
+
+import { CartService } from 'src/app/modules/core/services/cart-service/cart.service';
+import { OrderByPipe } from '../../shared/pipes/order-by.pipe';
 
 @Component({
   selector: 'app-cart',
@@ -15,8 +17,10 @@ export class CartComponent implements OnInit, OnDestroy {
   totalCount = 0;
   cartItems = [];
   private items: Subscription;
+  private isAscSort = false;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService,
+              private orderByPipe: OrderByPipe) { }
 
   ngOnInit(): void {
     this.items = this.cartService.boughtProducts.subscribe((product: Product) => {
@@ -30,9 +34,7 @@ export class CartComponent implements OnInit, OnDestroy {
         this.cartService.addCartItem(product.id);
       }
       this.cartItems = this.cartService.getCartProducts();
-      const { totalSum, totalCount } = this.cartService.updateCart();
-      this.totalSum = totalSum;
-      this.totalCount = totalCount;
+      this.updateCart();
     });
   }
 
@@ -42,9 +44,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
   addCartItem(cartItemId: number): void {
     this.cartService.addCartItem(cartItemId);
-    const { totalSum, totalCount } = this.cartService.updateCart();
-    this.totalSum = totalSum;
-    this.totalCount = totalCount;
+    this.updateCart();
   }
 
   deleteCartItem(cartItem: CartItem): void {
@@ -53,9 +53,7 @@ export class CartComponent implements OnInit, OnDestroy {
       return;
     }
     this.cartService.deleteCartItem(cartItem.product.id);
-    const { totalSum, totalCount } = this.cartService.updateCart();
-    this.totalSum = totalSum;
-    this.totalCount = totalCount;
+    this.updateCart();
   }
 
   deleteProduct(cartItemId: number): void {
@@ -69,6 +67,15 @@ export class CartComponent implements OnInit, OnDestroy {
   clearCart(): void {
     this.cartService.clearCart();
     this.cartItems = this.cartService.getCartProducts();
+    this.updateCart();
+  }
+
+  sort(field: string): void {
+    this.isAscSort = !this.isAscSort;
+    this.cartItems = this.orderByPipe.transform(this.cartItems, field, this.isAscSort);
+  }
+
+  private updateCart(): void {
     const { totalSum, totalCount } = this.cartService.updateCart();
     this.totalSum = totalSum;
     this.totalCount = totalCount;

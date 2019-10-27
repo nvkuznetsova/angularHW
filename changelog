@@ -3,3 +3,8 @@ Demo component is available by path: '/demo'
 HighLight directive work result is visible by clicking on:
   LocalStorage output block
   Options output block
+
+Task 4
+ProductComponent - currency pipe, upppercase, titlecase
+CartItemConponent - upppercase pipe
+CartComponent - currency pipe

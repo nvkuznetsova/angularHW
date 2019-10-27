@@ -76,7 +76,7 @@ const products = [
   providedIn: CoreModule,
 })
 export class ProductService {
-  getProducts(): Array<Product> {
-    return products;
+  getProducts(): Promise<Array<Product>> {
+    return new Promise(resolve => resolve(products));
   }
 }
