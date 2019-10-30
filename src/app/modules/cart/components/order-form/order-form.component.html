@@ -1,0 +1,23 @@
+<div class="col-lg-6 mx-auto">
+  <h4>Your Order: </h4>
+  <form [formGroup]="orderForm">
+    <div class="form-group">
+      <label for="nameInput">Name</label>
+      <input formControlName="name" type="text" class="form-control" id="nameInput" placeholder="Your Name">
+    </div>
+    <div class="form-group">
+      <label for="lastNameInput">Last Name</label>
+      <input formControlName="lastName" type="text" class="form-control" id="lastNameInput" placeholder="Your Last Name">
+    </div>
+    <div class="form-group">
+        <label for="emailInput">Email</label>
+        <input formControlName="email" type="email" class="form-control" id="emailInput" placeholder="Your Email">
+      </div>
+    <div class="form-group">
+      <label for="addressInput">Address</label>
+      <input formControlName="address" type="text" class="form-control" id="addressInput" placeholder="Your Address">
+    </div>
+    <button type="button" class="btn btn-secondary mr-2" (click)="onGoBack()">GoBack</button>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>

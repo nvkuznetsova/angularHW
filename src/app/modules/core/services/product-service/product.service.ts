@@ -17,7 +17,7 @@ const products = [
   new ProductModel({
     id: 2,
     name: 'orange',
-    description: 'tasty',
+    description: 'tasty nutritious',
     price: 1,
     category: Category.fruits,
     isAvailable: true,
@@ -78,5 +78,12 @@ const products = [
 export class ProductService {
   getProducts(): Promise<Array<Product>> {
     return new Promise(resolve => resolve(products));
+  }
+
+  getProduct(id: number): Promise<Product> {
+    const product =  products.find((prod: Product) => {
+      return prod.id === +id;
+    });
+    return new Promise(resolve => resolve(product));
   }
 }

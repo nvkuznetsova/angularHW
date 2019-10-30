@@ -1,15 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
-body {
-  position: relative;
+.app-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  height: 100vh;
 }
 
-.product-card {
-  min-width: 24%;
+.main-content {
+  flex: 1 0 auto;
 }
 
 .main-footer {
-  position: absolute;
-  bottom: 0;
+  flex: 0 0 auto;
 }
 
 .count, .delete {

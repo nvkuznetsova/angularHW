@@ -1,0 +1,13 @@
+<div *ngIf="!isLogginIn; else logginin" class="col-lg-6 mx-auto">
+  <h2>Login</h2>
+  <button class="btn btn-success mr-2"
+          [disabled]="authService.isLoggedIn"
+          (click)="onLogin()">Login</button>
+  <button class="btn btn-secondary"
+          [disabled]="!authService.isLoggedIn"
+          (click)="onLogout()">Logout</button>
+</div>
+
+<ng-template #logginin>
+  <h4>Loggin in...</h4>
+</ng-template>

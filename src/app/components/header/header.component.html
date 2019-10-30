@@ -1,3 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5">
-  <h1 class="navbar-brand">Welcome to {{ title }}!</h1>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" routerLink="/products">Welcome to {{ title }}!</a>
+  <div className="d-flex flex-row">
+    <ul class="nav">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link text-light" [routerLink]="[{outlets: {primary: 'products', feedback: null}}]">Products</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link text-light" [routerLink]="[{outlets: {primary: 'cart', feedback: null}}]">Cart</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" [routerLink]="[{outlets: {primary: 'login', feedback: null}}]">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-light" [routerLink]="[{outlets: {primary: 'admin', feedback: null}}]">Admin</a>
+      </li>
+    </ul>
+  </div>
 </nav>

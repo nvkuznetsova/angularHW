@@ -5,19 +5,22 @@ import { Product } from 'src/app/domain/Product';
 @Component({
   selector: 'app-product-component',
   templateUrl: './product-component.component.html',
-  styleUrls: ['./product-component.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductComponent implements OnInit {
   @Input() product: Product;
   @Output() buyProduct: EventEmitter<Product> = new EventEmitter<Product>();
+  @Output() seeDetails: EventEmitter<Product> = new EventEmitter<Product>();
 
   constructor() { }
 
   ngOnInit() {}
 
-  onBuy(product: Product): void {
-    this.buyProduct.emit(product);
+  onBuy(): void {
+    this.buyProduct.emit(this.product);
   }
 
+  onDetailsClick(): void {
+    this.seeDetails.emit(this.product);
+  }
 }

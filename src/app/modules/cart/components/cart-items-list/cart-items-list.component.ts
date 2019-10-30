@@ -1,45 +1,29 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { CartItem } from 'src/app/domain/CartItem';
-import { Product } from 'src/app/domain/Product';
 
 import { CartService } from 'src/app/modules/core/services/cart-service/cart.service';
-import { OrderByPipe } from '../../shared/pipes/order-by.pipe';
+import { OrderByPipe } from '../../../shared/pipes/order-by.pipe';
 
 @Component({
   selector: 'app-cart',
-  templateUrl: './cart.component.html',
+  templateUrl: './cart-items-list.component.html',
 })
-export class CartComponent implements OnInit, OnDestroy {
+export class CartItemsListComponent implements OnInit {
   totalSum = 0;
   totalCount = 0;
   cartItems = [];
-  private items: Subscription;
   private isAscSort = false;
 
   constructor(private cartService: CartService,
-              private orderByPipe: OrderByPipe) { }
+              private orderByPipe: OrderByPipe,
+              private router: Router,
+              private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.items = this.cartService.boughtProducts.subscribe((product: Product) => {
-      const cartItem: CartItem = {
-        product,
-        count: 1,
-      };
-      if (!this.isItemExists(cartItem)) {
-        this.cartService.setCartProducts(cartItem);
-      } else {
-        this.cartService.addCartItem(product.id);
-      }
-      this.cartItems = this.cartService.getCartProducts();
-      this.updateCart();
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.items.unsubscribe();
+    this.cartItems = this.cartService.getCartProducts();
+    this.updateCart();
   }
 
   addCartItem(cartItemId: number): void {
@@ -59,9 +43,7 @@ export class CartComponent implements OnInit, OnDestroy {
   deleteProduct(cartItemId: number): void {
     this.cartService.deleteProduct(cartItemId);
     this.cartItems = this.cartService.getCartProducts();
-    const { totalSum, totalCount } = this.cartService.updateCart();
-    this.totalSum = totalSum;
-    this.totalCount = totalCount;
+    this.updateCart();
   }
 
   clearCart(): void {
@@ -75,15 +57,14 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartItems = this.orderByPipe.transform(this.cartItems, field, this.isAscSort);
   }
 
+  makeOrder(): void {
+    // resolve guard
+    this.router.navigate(['order'], { relativeTo: this.activeRoute });
+  }
+
   private updateCart(): void {
     const { totalSum, totalCount } = this.cartService.updateCart();
     this.totalSum = totalSum;
     this.totalCount = totalCount;
-  }
-
-  private isItemExists(item: CartItem): boolean {
-    return this.cartService.getCartProducts().some((cartItem: CartItem) => {
-      return item.product.id === cartItem.product.id;
-    });
   }
 }

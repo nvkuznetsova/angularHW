@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { Subject } from 'rxjs';
-
-import { Product } from 'src/app/domain/Product';
 import { CartItem } from 'src/app/domain/CartItem';
 
 import { CoreModule } from '../../core.module';
@@ -12,39 +9,36 @@ import { CoreModule } from '../../core.module';
 })
 export class CartService {
   private cartItems: Array<CartItem> = [];
-  private totalCartSum = 0;
-  private totalGoodsCount = 0;
-  private products = new Subject<Product>();
-  boughtProducts = this.products.asObservable();
 
   constructor() {}
 
-  setCartProducts(item: CartItem) {
-    this.cartItems = [...this.cartItems, item];
-  }
-
   getCartProducts(): Array<CartItem> {
-    return this.cartItems;
+    return this.cartItems = localStorage['cart-items'] ?
+      JSON.parse(localStorage.getItem('cart-items')) : this.cartItems;
   }
 
-  addProduct(product: Product): void {
-    this.products.next(product);
+  addProduct(item: CartItem) {
+    this.cartItems = [...this.cartItems, item];
+    localStorage.setItem('cart-items', JSON.stringify(this.cartItems));
   }
 
   deleteProduct(cartItemId: number): void {
     this.cartItems = this.cartItems.filter(item => {
       return item.product.id !== cartItemId;
     });
+    localStorage.setItem('cart-items', JSON.stringify(this.cartItems));
   }
 
   addCartItem(cartItemId: number): void {
     const idx = this.findCartItemIdx(cartItemId);
     this.cartItems[idx].count += 1;
+    localStorage.setItem('cart-items', JSON.stringify(this.cartItems));
   }
 
   deleteCartItem(cartItemId: number): void {
     const idx = this.findCartItemIdx(cartItemId);
     this.cartItems[idx].count -= 1;
+    localStorage.setItem('cart-items', JSON.stringify(this.cartItems));
   }
 
   updateCart(): {totalSum: number, totalCount: number} {
@@ -56,13 +50,14 @@ export class CartService {
     });
 
     return {
-      totalSum: this.totalCartSum = sum,
-      totalCount: this.totalGoodsCount = count,
+      totalSum: sum,
+      totalCount: count,
     };
   }
 
   clearCart(): void {
     this.cartItems = [];
+    localStorage.removeItem('cart-items');
   }
 
   private findCartItemIdx(cartItemId: number): number {

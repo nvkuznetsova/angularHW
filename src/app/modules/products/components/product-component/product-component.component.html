@@ -7,6 +7,9 @@
     'badge-danger': !product.isAvailable}">{{product.isAvailable ? 'Available' : 'Unavailable'}}</span>
     </h5>
     <p class="card-text">Price: {{product.price | currency : USD}}</p>
-    <button class="btn btn-primary w-100" [disabled]="!product.isAvailable" (click)="onBuy(product)">Buy</button>
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info px-3 mr-2" (click)="onDetailsClick()">Details</button>
+      <button class="btn btn-primary px-3" [disabled]="!product.isAvailable" (click)="onBuy()">Buy</button>
+    </div>
   </div>
 </div>
