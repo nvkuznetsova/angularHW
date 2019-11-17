@@ -1,0 +1,19 @@
+<h4>LocalStorageService Demo</h4>
+<div class="row" *ngIf="noProviderForLocalStorage.length === 0; else noLocalStorageService">
+  <div class="col-md-6">
+    <app-local-storage-form
+     (localStorageFormValue)="addValueToLocalStorage($event)"
+    ></app-local-storage-form>
+  </div>
+  <div class="col-md-6" appHighlight color="lightyellow">
+    <h5>LocalStorage</h5>
+    <div *ngFor="let storageItem of storageItems">
+      {{storageItem.key}}: {{storageItem.value}}
+      <span class="badge badge-danger ml-2" (click)="removeLocalStorageValue(storageItem.key)">X</span>
+    </div>
+  </div>
+</div>
+
+<ng-template #noLocalStorageService>
+    <div>{{noProviderForLocalStorage}}</div>
+  </ng-template>

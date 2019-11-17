@@ -15,6 +15,11 @@ import { ProductsModule } from './modules/products/products.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { CoreModule } from './modules/core/core.module';
 
+import { LocalStorageFormComponent } from './demo-components/local-storage-form/local-storage-form.component';
+import { ConfigOptionsFormComponent } from './demo-components/config-options-form/config-options-form.component';
+import { LocalStorageComponent } from './demo-components/local-storage/local-storage.component';
+import { ConfigOptionsComponent } from './demo-components/config-options/config-options.component';
+
 const routes: Routes = [
   { path: 'demo', component: DemoComponent },
   { path: '', component: ProductsPageComponent, pathMatch: 'full' }
@@ -26,6 +31,10 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
     DemoComponent,
+    LocalStorageFormComponent,
+    ConfigOptionsFormComponent,
+    LocalStorageComponent,
+    ConfigOptionsComponent,
   ],
   imports: [
     BrowserModule,

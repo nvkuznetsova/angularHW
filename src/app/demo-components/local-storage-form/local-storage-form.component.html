@@ -1,0 +1,19 @@
+<form [formGroup]="localStorageForm">
+  <app-form-input
+    [inputLabelText]="'Enter LocalStorage Key'"
+    [inputId]="'storageKey'"
+    [inputType]="'text'"
+    [inputControl]="localStorageKey"
+  ></app-form-input>
+  <div *ngIf="localStorageKey.invalid && (localStorageKey.touched || localStorageKey.dirty) && localStorageKey.hasError('required')">Value is required</div>
+  <app-form-input
+    [inputLabelText]="'Enter LocalStorage Value'"
+    [inputId]="'storageValue'"
+    [inputType]="'text'"
+    [inputControl]="localStorageForm.controls['localStorageValue']"
+  ></app-form-input>
+  <div *ngIf="localStorageValue.invalid && (localStorageValue.touched || localStorageValue.dirty) && localStorageValue.hasError('required')">Value is required</div>
+  <button type="submit" class="btn btn-success"
+          [disabled]="localStorageForm.invalid"
+          (click)="addValueToLocalStorage()">Add Value to LocalStorage</button>
+</form>

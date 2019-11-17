@@ -16,6 +16,18 @@ export class LocalStorageService {
     return localStorage.getItem(key);
   }
 
+  getItems() {
+    const storageItems = [];
+    for (const key in localStorage) {
+      if (localStorage.hasOwnProperty(key)) {
+        const storageItem = localStorage.getItem(key);
+        storageItems.push({ key, value: storageItem});
+      }
+    }
+
+    return storageItems;
+  }
+
   removeItem(key: string): void {
     localStorage.removeItem(key);
   }
