@@ -1,0 +1,18 @@
+<h4>ConfigOptionsService Demo</h4>
+<div class="row" *ngIf="noProviderForOptionsService.length === 0; else noConfigOptionsService">
+  <div class="col-md-6">
+    <app-config-options-form
+     (configOptionsFormValue)="setOptions($event)"
+    ></app-config-options-form>
+  </div>
+  <div class="col-md-6" appHighlight color="lightblue">
+    <h5>Options</h5>
+    <p>Id: {{configOptions.id}}</p>
+    <p>Login: {{configOptions.login}}</p>
+    <p>Email: {{configOptions.email}}</p>
+  </div>
+</div>
+
+<ng-template #noConfigOptionsService>
+  <div>{{noProviderForOptionsService}}</div>
+</ng-template>

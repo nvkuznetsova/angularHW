@@ -1,5 +1,5 @@
 <div class="row d-flex justify-content-between align-items-center">
-  <div class="col-md-4 product-card" *ngFor="let product of products">
+  <div class="col-lg-6 product-card" *ngFor="let product of products">
     <app-product-component [product]="product"
                            (buyProduct)="onBuy($event)">
     </app-product-component>

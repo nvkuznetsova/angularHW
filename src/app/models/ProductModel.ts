@@ -1,6 +1,7 @@
 import { Category, Product } from '../domain/Product';
 
 export class ProductModel implements Product {
+  id = 0;
   name = '';
   description = '';
   price = 0;

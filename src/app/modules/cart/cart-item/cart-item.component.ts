@@ -10,18 +10,21 @@ export class CartItemComponent implements OnInit {
   @Input() cartItem: CartItem;
   @Output() addItem: EventEmitter<number> = new EventEmitter<number>();
   @Output() deleteItem: EventEmitter<CartItem> = new EventEmitter<CartItem>();
+  @Output() deleteProduct: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() { }
 
   ngOnInit() {}
 
   onAddItem(): void {
-    this.cartItem.count += 1;
-    this.addItem.emit(this.cartItem.product.price);
+    this.addItem.emit(this.cartItem.product.id);
   }
 
   onDeleteItem(): void {
     this.deleteItem.emit(this.cartItem);
   }
 
+  onDeleteProduct(): void {
+    this.deleteProduct.emit(this.cartItem.product.id);
+  }
 }

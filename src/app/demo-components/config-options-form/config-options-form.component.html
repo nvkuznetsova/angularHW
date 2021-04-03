@@ -1,0 +1,23 @@
+<form [formGroup]="configOptionsForm">
+    <app-form-input
+    [inputLabelText]="'Enter Login'"
+    [inputId]="'login'"
+    [inputType]="'text'"
+    [inputControl]="login"
+  ></app-form-input>
+  <div *ngIf="login.invalid && (login.touched || login.dirty) && login.hasError('required')">Value is required</div>
+  <app-form-input
+    [inputLabelText]="'Enter Email'"
+    [inputId]="'email'"
+    [inputType]="'email'"
+    [inputControl]="email"
+  ></app-form-input>
+  <div *ngIf="email.invalid && (email.touched || email.dirty)">
+    <p *ngIf="email.hasError('required')">Value is required</p>
+    <p *ngIf="email.hasError('email')">Value should be email</p>
+  </div>
+  <button type="submit"
+          class="btn btn-success"
+          [disabled]="configOptionsForm.invalid"
+          (click)="setOptions()">Set Options</button>
+</form>
